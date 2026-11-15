@@ -1,4 +1,4 @@
-import { useEffect, useState, type AnimationEvent, type ReactNode } from 'react';
+import { useState, type AnimationEvent, type ReactNode } from 'react';
 import { useLocation, type Location } from 'react-router-dom';
 
 interface PageTransitionProps {
@@ -12,16 +12,12 @@ interface PageTransitionProps {
 export function PageTransition({ children }: PageTransitionProps) {
   const location = useLocation();
   const [displayed, setDisplayed] = useState(location);
-  const [stage, setStage] = useState<'enter' | 'exit'>('enter');
-
-  useEffect(() => {
-    if (location.pathname !== displayed.pathname) setStage('exit');
-  }, [location, displayed]);
+  // While the router is ahead of what is on screen, the old page is leaving.
+  const stage = location.pathname === displayed.pathname ? 'enter' : 'exit';
 
   const handleAnimationEnd = (event: AnimationEvent<HTMLDivElement>) => {
     if (event.target !== event.currentTarget || stage !== 'exit') return;
     setDisplayed(location);
-    setStage('enter');
     window.scrollTo(0, 0);
   };
 

@@ -113,7 +113,11 @@ export function NetworkBackground() {
           })}
         </g>
         {NODES.map((node) => (
-          <g key={node.id} className={`background__node background__node--${node.type}`} transform={`translate(${node.x} ${node.y})`}>
+          <g
+            key={node.id}
+            className={`background__node background__node--${node.type}`}
+            transform={`translate(${node.x} ${node.y})`}
+          >
             <rect className="background__tile" x="-32" y="-32" width="64" height="64" rx="14" />
             <g className="background__glyph">{GLYPHS[node.type]}</g>
             <text y="52">{node.label}</text>

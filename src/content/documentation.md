@@ -20,10 +20,10 @@ Most traffic stays between your devices and the DNS server. Only a small share o
 
 ## Concepts
 
-| Term | Meaning |
-| --- | --- |
-| Local record | A name you define that resolves to an address on your network |
-| Cache | Recently resolved answers kept locally for fast repeat lookups |
+| Term              | Meaning                                                               |
+| ----------------- | --------------------------------------------------------------------- |
+| Local record      | A name you define that resolves to an address on your network         |
+| Cache             | Recently resolved answers kept locally for fast repeat lookups        |
 | Upstream resolver | The Internet DNS service that answers names Command DNS does not know |
 
 ## Tips

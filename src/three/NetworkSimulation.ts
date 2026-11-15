@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js';
 import type { AnimationConfig, SecondsRange } from '../config/animation';
 import type { Theme } from '../hooks/useTheme';
+import { advanceLink, createLink, frameDelta, type TrafficLink } from './traffic';
 
 export type SimulationStatus = 'running' | 'paused' | 'finished';
 
@@ -57,36 +58,11 @@ const PALETTES: Record<Theme, Palette> = {
 type DeviceKind = 'workstation' | 'server';
 
 /** Devices placed around the DNS server, front-left to front-right. */
-const DEVICES: readonly DeviceKind[] = [
-  'server',
-  'workstation',
-  'workstation',
-  'server',
-  'workstation',
-  'server',
-];
+const DEVICES: readonly DeviceKind[] = ['server', 'workstation', 'workstation', 'server', 'workstation', 'server'];
 
 const DEVICE_RADIUS = 3.2;
 const DOT_HEIGHT = 0.14;
 const GLOBE_CENTER = new THREE.Vector3(0, 1.55, -3.5);
-
-type Phase = 'waiting' | 'outbound' | 'inbound';
-
-interface TrafficLink {
-  readonly from: THREE.Vector3;
-  readonly to: THREE.Vector3;
-  readonly length: number;
-  readonly speed: number;
-  readonly interval: SecondsRange;
-  readonly dot: THREE.Mesh;
-  phase: Phase;
-  progress: number;
-  wait: number;
-}
-
-function randomIn([min, max]: SecondsRange): number {
-  return min + Math.random() * (max - min);
-}
 
 /**
  * three.js scene: workstations and servers around a DNS server that is
@@ -96,7 +72,6 @@ export class NetworkSimulation {
   private readonly renderer: THREE.WebGLRenderer;
   private readonly scene = new THREE.Scene();
   private readonly camera = new THREE.PerspectiveCamera(36, 1, 0.1, 100);
-  private readonly timer = new THREE.Timer();
   private readonly resizeObserver: ResizeObserver;
   private readonly links: TrafficLink[] = [];
 
@@ -119,6 +94,7 @@ export class NetworkSimulation {
   private status: SimulationStatus = 'paused';
   private elapsed = 0;
   private frame = 0;
+  private lastTimestamp: number | null = null;
   private disposed = false;
 
   constructor(
@@ -146,7 +122,9 @@ export class NetworkSimulation {
     this.buildInternet();
     this.setTheme(theme);
 
-    this.resizeObserver = new ResizeObserver(() => this.resize());
+    this.resizeObserver = new ResizeObserver(() => {
+      this.resize();
+    });
     this.resizeObserver.observe(container);
     this.resize();
   }
@@ -156,7 +134,7 @@ export class NetworkSimulation {
     if (this.disposed || this.status === 'running') return;
     if (this.status === 'finished') this.elapsed = 0;
     this.setStatus('running');
-    this.timer.reset();
+    this.lastTimestamp = null;
     this.frame = requestAnimationFrame(this.tick);
   }
 
@@ -196,13 +174,15 @@ export class NetworkSimulation {
     cancelAnimationFrame(this.frame);
     this.resizeObserver.disconnect();
     this.scene.traverse((object) => {
-      if (object instanceof THREE.Mesh || object instanceof THREE.Line || object instanceof THREE.Sprite) {
-        object.geometry.dispose();
-        const materials: THREE.Material[] = Array.isArray(object.material) ? object.material : [object.material];
-        for (const material of materials) {
-          if (material instanceof THREE.SpriteMaterial) material.map?.dispose();
-          material.dispose();
-        }
+      if (!(object instanceof THREE.Mesh || object instanceof THREE.Line || object instanceof THREE.Sprite)) return;
+      const { geometry, material } = object as {
+        geometry: THREE.BufferGeometry;
+        material: THREE.Material | THREE.Material[];
+      };
+      geometry.dispose();
+      for (const item of Array.isArray(material) ? material : [material]) {
+        if (item instanceof THREE.SpriteMaterial) item.map?.dispose();
+        item.dispose();
       }
     });
     this.renderer.dispose();
@@ -216,12 +196,11 @@ export class NetworkSimulation {
 
   private readonly tick = (timestamp: number): void => {
     if (this.status !== 'running') return;
-    this.timer.update(timestamp);
-    // Clamp so a background tab does not produce one huge jump.
-    const dt = Math.min(this.timer.getDelta(), 0.1);
+    const dt = frameDelta(this.lastTimestamp, timestamp);
+    this.lastTimestamp = timestamp;
     this.elapsed += dt;
 
-    for (const link of this.links) this.advance(link, dt);
+    for (const link of this.links) advanceLink(link, dt);
     this.globe.rotation.y += dt * 0.5;
     const pulse = (this.elapsed * 0.6) % 1;
     this.ring.scale.setScalar(1 + pulse * 0.9);
@@ -235,33 +214,6 @@ export class NetworkSimulation {
     }
     this.frame = requestAnimationFrame(this.tick);
   };
-
-  private advance(link: TrafficLink, dt: number): void {
-    if (link.phase === 'waiting') {
-      link.wait -= dt;
-      if (link.wait > 0) return;
-      link.phase = 'outbound';
-      link.progress = 0;
-      link.dot.visible = true;
-    } else {
-      link.progress += (dt * link.speed) / link.length;
-    }
-
-    if (link.progress >= 1) {
-      if (link.phase === 'outbound') {
-        link.phase = 'inbound';
-        link.progress = 0;
-      } else {
-        link.phase = 'waiting';
-        link.wait = randomIn(link.interval);
-        link.dot.visible = false;
-        return;
-      }
-    }
-
-    if (link.phase === 'outbound') link.dot.position.lerpVectors(link.from, link.to, link.progress);
-    else link.dot.position.lerpVectors(link.to, link.from, link.progress);
-  }
 
   private render(): void {
     if (!this.disposed) this.renderer.render(this.scene, this.camera);
@@ -293,25 +245,19 @@ export class NetworkSimulation {
     parent.add(pad);
   }
 
-  private addLink(from: THREE.Vector3, to: THREE.Vector3, speed: number, interval: SecondsRange, firstWait: number): void {
+  private addLink(
+    from: THREE.Vector3,
+    to: THREE.Vector3,
+    speed: number,
+    interval: SecondsRange,
+    firstWait: number,
+  ): void {
     const geometry = new THREE.BufferGeometry().setFromPoints([from, to]);
     this.scene.add(new THREE.Line(geometry, this.linkMaterial));
 
     const dot = new THREE.Mesh(new THREE.SphereGeometry(0.14, 20, 20), this.dotMaterial);
-    dot.visible = false;
     this.scene.add(dot);
-
-    this.links.push({
-      from,
-      to,
-      length: from.distanceTo(to),
-      speed,
-      interval,
-      dot,
-      phase: 'waiting',
-      progress: 0,
-      wait: firstWait,
-    });
+    this.links.push(createLink(from, to, speed, interval, dot, firstWait));
   }
 
   private buildDnsServer(): void {

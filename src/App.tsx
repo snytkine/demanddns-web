@@ -26,7 +26,10 @@ export function App() {
                 <Route path="/features" element={<MarkdownPage content={features} />} />
                 <Route path="/documentation" element={<MarkdownPage content={documentation} />} />
                 <Route path="/download" element={<MarkdownPage content={download} />} />
-                <Route path="*" element={<MarkdownPage content={'# Page not found\n\nGo back to the [home page](/).'} />} />
+                <Route
+                  path="*"
+                  element={<MarkdownPage content={'# Page not found\n\nGo back to the [home page](/).'} />}
+                />
               </Routes>
             )}
           </PageTransition>

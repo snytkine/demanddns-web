@@ -9,3 +9,26 @@ The website must include configuration necessary for hosting this website on git
 Default working branch is the "develop" branch.
 
 You can make commits but deployments must be made from the "main" branch.
+
+## Testing
+All changes and additions to the project must have unit tests. Add or update the tests in the same change as the code — a change without tests is not complete.
+
+- Tests use Vitest with React Testing Library and live next to the code they cover, named `<file>.test.ts` or `<file>.test.tsx`.
+- Unit test coverage must be at least 90% for statements, branches, functions and lines. The thresholds are enforced in `vite.config.ts`; do not lower them and do not add files to the coverage `exclude` list to get under the bar.
+- Test behavior the user or caller can observe (rendered text, roles, callbacks, returned values), not implementation details.
+- WebGL does not run in the test environment. Keep logic out of rendering code where possible (see `src/three/traffic.ts`) and mock only the renderer (see `src/three/NetworkSimulation.test.ts`).
+- Run `npm run check` before every commit. It runs the type-check, lint, formatting check and the tests with coverage, and it must pass. The same command runs in CI and blocks deployment when it fails.
+
+## Coding style
+Style is enforced by ESLint (`eslint.config.js`, typescript-eslint strict type-checked rules plus React Hooks rules) and Prettier (`.prettierrc.json`). Do not hand-format code and do not argue with the tools: run `npm run format` and `npm run lint:fix`, then fix what remains.
+
+- Formatting is Prettier's: single quotes, semicolons, trailing commas, 2-space indent, 120-character lines.
+- TypeScript is strict. Do not use `any`, non-null assertions (`!`) or `@ts-ignore` in application code. Prefer `unknown` plus narrowing.
+- Do not disable a lint rule to make an error go away. If a rule genuinely does not apply, disable it for that one line with a comment that says why.
+- Use `import type` / inline `type` imports for types.
+- Components are function components with named exports, one component per file, file named after the component in PascalCase. Hooks are named `useXxx` and live in `src/hooks`. (A default export is used only where `React.lazy` requires it.)
+- Declare component props as an `interface` with `readonly` members.
+- Page text belongs in Markdown files under `src/content`, and tunable values belong in `src/config` — do not hard-code either in components.
+- Colors, spacing and theme values come from the CSS custom properties in `src/styles/global.css`; every visual change must work in both light and dark mode and at phone width.
+- No `console` calls in committed code.
+- Comments explain why, not what.

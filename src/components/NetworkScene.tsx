@@ -28,6 +28,7 @@ export default function NetworkScene({ theme }: NetworkSceneProps) {
       simulation = new NetworkSimulation(container, animationConfig, themeRef.current, setStatus);
     } catch {
       // WebGL is unavailable; the page works without the animation.
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- reports a failure of the external WebGL system
       setFailed(true);
       return;
     }
