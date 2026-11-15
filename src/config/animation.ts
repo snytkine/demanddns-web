@@ -19,9 +19,9 @@ export interface AnimationConfig {
  * Larger speed = faster dots. Larger interval = less frequent traffic.
  */
 export const animationConfig: AnimationConfig = {
-  loopSeconds: 10,
+  loopSeconds: 12,
   lanDotSpeed: 3.2,
   lanQueryInterval: [0.3, 1.6],
-  internetDotSpeed: 2.2,
+  internetDotSpeed: 2.1,
   internetQueryInterval: [2.5, 4],
 };
