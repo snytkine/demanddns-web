@@ -9,6 +9,7 @@ import { MarkdownPage } from './pages/MarkdownPage';
 import documentation from './content/documentation.md?raw';
 import download from './content/download.md?raw';
 import features from './content/features.md?raw';
+import tutorials from './content/tutorials.md?raw';
 
 export function App() {
   const { theme, toggleTheme } = useTheme();
@@ -25,6 +26,7 @@ export function App() {
                 <Route path="/" element={<HomePage theme={theme} />} />
                 <Route path="/features" element={<MarkdownPage content={features} />} />
                 <Route path="/documentation" element={<MarkdownPage content={documentation} />} />
+                <Route path="/tutorials" element={<MarkdownPage content={tutorials} />} />
                 <Route path="/download" element={<MarkdownPage content={download} />} />
                 <Route
                   path="*"

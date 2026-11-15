@@ -28,10 +28,16 @@ describe('App', () => {
   it.each([
     ['/features', 'Features'],
     ['/documentation', 'Documentation'],
+    ['/tutorials', 'Tutorials'],
     ['/download', 'Download'],
   ])('shows the %s page', (path, title) => {
     renderApp(path);
     expect(within(screen.getByRole('main')).getByRole('heading', { level: 1, name: title })).toBeInTheDocument();
+  });
+
+  it('shows the placeholder text on the Tutorials page', () => {
+    renderApp('/tutorials');
+    expect(within(screen.getByRole('main')).getByText('Tutorials coming soon')).toBeInTheDocument();
   });
 
   it('shows a not-found page for unknown addresses', () => {

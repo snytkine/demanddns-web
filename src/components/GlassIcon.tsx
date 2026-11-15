@@ -20,6 +20,12 @@ const GLYPHS: Record<IconName, ReactNode> = {
       <path d="M12 6.500V19" />
     </>
   ),
+  tutorials: (
+    <>
+      <rect x="3.5" y="6" width="17" height="12" rx="3" />
+      <path d="M10.5 9.6v4.800l4-2.400Z" fill="#fff" />
+    </>
+  ),
   download: (
     <>
       <path d="M12 4.500V14M8 10.500l4 4 4-4" />

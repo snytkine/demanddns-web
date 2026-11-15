@@ -284,6 +284,11 @@ a:hover {
   --icon-b: #93a3b8;
 }
 
+.glass-icon--tutorials {
+  --icon-a: #b7c9ea;
+  --icon-b: #4468b0;
+}
+
 .glass-icon--download {
   --icon-a: #4f86e8;
   --icon-b: #0a2f7c;
@@ -694,7 +699,7 @@ a:hover {
 }
 
 /* ---------- Tablet ---------- */
-@media (max-width: 980px) {
+@media (max-width: 1100px) {
   .nav__item {
     padding: 6px 9px 6px 7px;
     gap: 7px;
@@ -706,7 +711,7 @@ a:hover {
 }
 
 /* ---------- Mobile: navigation becomes a bottom tab bar ---------- */
-@media (max-width: 760px) {
+@media (max-width: 960px) {
   .app {
     padding-top: 12px;
   }
@@ -744,6 +749,8 @@ a:hover {
     right: 10px;
     bottom: calc(10px + env(safe-area-inset-bottom));
     z-index: 10;
+    max-width: 560px;
+    margin-inline: auto;
     justify-content: space-around;
     padding: 6px;
     border-radius: 20px;
@@ -763,6 +770,13 @@ a:hover {
     min-width: 0;
   }
 
+  .footer {
+    padding-bottom: calc(100px + env(safe-area-inset-bottom));
+  }
+}
+
+/* ---------- Narrow screens: stack the home page ---------- */
+@media (max-width: 760px) {
   .hero {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -776,9 +790,17 @@ a:hover {
   .cards {
     grid-template-columns: minmax(0, 1fr);
   }
+}
 
-  .footer {
-    padding-bottom: calc(100px + env(safe-area-inset-bottom));
+/* ---------- Phones: swap long tab labels for their short form ---------- */
+@media (max-width: 480px) {
+  .nav__item span[data-short] {
+    font-size: 0;
+  }
+
+  .nav__item span[data-short]::after {
+    content: attr(data-short);
+    font-size: 11px;
   }
 }
 

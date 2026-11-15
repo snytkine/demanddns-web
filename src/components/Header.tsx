@@ -27,7 +27,7 @@ export function Header({ theme, onToggleTheme }: HeaderProps) {
         {navItems.map((item) => (
           <NavLink key={item.path} to={item.path} end={item.path === '/'} className="nav__item">
             <GlassIcon name={item.icon} />
-            <span>{item.label}</span>
+            <span data-short={item.shortLabel}>{item.label}</span>
           </NavLink>
         ))}
       </nav>

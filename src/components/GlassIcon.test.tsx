@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import type { IconName } from '../config/site';
 import { GlassIcon } from './GlassIcon';
 
-const names: IconName[] = ['home', 'features', 'documentation', 'download', 'how-it-works'];
+const names: IconName[] = ['home', 'features', 'documentation', 'tutorials', 'download', 'how-it-works'];
 
 describe('GlassIcon', () => {
   it.each(names)('renders a decorative "%s" icon', (name) => {
