@@ -1,5 +1,3 @@
-
-
 create a modern web application that uses react.js, three.js and utilized modern HTML 5 features. Website must render well in browser as well as in mobile devices.
 
 The goal of the website is to promote this new project. The project is called "Command DNS" which is an app for locally hosted DNS server. 
