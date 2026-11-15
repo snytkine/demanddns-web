@@ -555,8 +555,6 @@ a:hover {
 
 /* ---------- Markdown pages ---------- */
 .panel {
-  max-width: 860px;
-  margin: 0 auto;
   padding: clamp(24px, 5vw, 56px);
   border-radius: 24px;
 }
