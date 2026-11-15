@@ -31,6 +31,9 @@ npm run test           # unit tests (npm run test:watch while developing)
 npm run test:coverage  # unit tests with the coverage gate
 ```
 
+A pre-commit hook (Husky, `.husky/pre-commit`) runs `npm run check` and `npm run build`
+and rejects the commit if anything fails. It is installed automatically by `npm install`.
+
 Every change must come with unit tests. Coverage must stay at or above 90% for
 statements, branches, functions and lines; the build fails below that.
 Tests live next to the code as `*.test.ts(x)` and use Vitest with React Testing Library.
