@@ -274,14 +274,10 @@ a:hover {
   height: 56px;
 }
 
-.glass-icon--features {
+.glass-icon--features,
+.glass-icon--documentation {
   --icon-a: #8fd3ff;
   --icon-b: #2a86e8;
-}
-
-.glass-icon--documentation {
-  --icon-a: #e9eef5;
-  --icon-b: #93a3b8;
 }
 
 .glass-icon--tutorials {
