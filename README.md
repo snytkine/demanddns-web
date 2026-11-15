@@ -2,6 +2,15 @@
 
 Promotional single-page website for Command DNS, built with React, TypeScript, Vite and three.js.
 
+## Repository
+
+- Web: <https://github.com/snytkine/commanddns-web>
+- Git origin: `git@github.com:snytkine/commanddns-web.git`
+
+```sh
+git clone git@github.com:snytkine/commanddns-web.git
+```
+
 ## Develop
 
 ```sh
