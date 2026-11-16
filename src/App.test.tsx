@@ -8,9 +8,9 @@ vi.mock('./components/NetworkScene', () => ({
   default: () => <div data-testid="scene" />,
 }));
 
-function renderApp(path = '/') {
+function renderApp(path = '/', basename?: string) {
   return render(
-    <MemoryRouter initialEntries={[path]}>
+    <MemoryRouter initialEntries={[path]} basename={basename}>
       <App />
     </MemoryRouter>,
   );
@@ -33,6 +33,13 @@ describe('App', () => {
   ])('shows the %s page', (path, title) => {
     renderApp(path);
     expect(within(screen.getByRole('main')).getByRole('heading', { level: 1, name: title })).toBeInTheDocument();
+  });
+
+  it('opens a deep link served under a repository path, as on GitHub Pages', () => {
+    renderApp('/demanddns-web/features', '/demanddns-web/');
+    expect(within(screen.getByRole('main')).getByRole('heading', { level: 1, name: 'Features' })).toBeInTheDocument();
+    const nav = screen.getByRole('navigation', { name: 'Main' });
+    expect(within(nav).getByRole('link', { name: 'Download' })).toHaveAttribute('href', '/demanddns-web/download');
   });
 
   it('shows the placeholder text on the Tutorials page', () => {

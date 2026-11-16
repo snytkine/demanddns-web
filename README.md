@@ -59,14 +59,17 @@ pre-commit hook is what checks work on `develop`.
 
 One-time setup in the GitHub repository: **Settings → Pages → Source: GitHub Actions**.
 
-### Deep links
+### URLs and deep links
 
-GitHub Pages cannot rewrite unknown addresses to `index.html`, and the app uses hash
-routing (`/#/features`), which needs no server support. Two things make every link work:
+Pages have plain URLs such as `/features` (React Router's `BrowserRouter`, no `#`). GitHub
+Pages only serves files that exist, so two things make direct links work:
 
-- `/<repo>/#/features` always works: the server only ever sees `/<repo>/`.
-- `public/404.html` is served by GitHub Pages for any address without a file behind it.
-  It rewrites `/<repo>/features` to `/<repo>/#/features`, so links typed or shared without
-  the `#` also work. Unknown pages end up on the app's "Page not found" screen. On a
-  `*.github.io` host the first path segment is treated as the repository name; on a custom
-  domain it is not. `public/.nojekyll` stops Pages from running Jekyll over the build.
+- The build copies `index.html` to `404.html`. Pages serves it for any address without a
+  file behind it, the app starts, and the router shows the page for that address (or its own
+  "Page not found" screen).
+- Assets are loaded from absolute URLs, which a deep link needs. The deploy workflow gets
+  the site's path from `actions/configure-pages` and passes it to the build as `BASE_PATH`
+  (`/<repository>` for a project site, empty on a custom domain; see `build/base.ts`).
+  Locally it defaults to `/`.
+
+`public/.nojekyll` stops Pages from running Jekyll over the build.
