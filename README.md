@@ -23,7 +23,7 @@ npm run preview  # serve the production build
 ## Quality checks
 
 ```sh
-npm run check          # everything below, as run in CI
+npm run check          # everything below, as run by the pre-commit hook and the deploy
 npm run typecheck      # TypeScript
 npm run lint           # ESLint (npm run lint:fix to auto-fix)
 npm run format:check   # Prettier (npm run format to rewrite files)
@@ -54,8 +54,8 @@ GitHub Pages on every push to `main` (direct commits and merges). It can also be
 re-run from the Actions tab, but both jobs are guarded to run only on `main`. A failing
 check blocks the deployment. Day-to-day work happens on `develop`.
 
-`.github/workflows/ci.yml` runs the same checks on pushes to `develop` and on pull
-requests. It never deploys.
+This is the only workflow. Nothing runs on GitHub for `develop` or for pull requests; the
+pre-commit hook is what checks work on `develop`.
 
 One-time setup in the GitHub repository: **Settings → Pages → Source: GitHub Actions**.
 

@@ -17,7 +17,7 @@ All changes and additions to the project must have unit tests. Add or update the
 - Unit test coverage must be at least 90% for statements, branches, functions and lines. The thresholds are enforced in `vite.config.ts`; do not lower them and do not add files to the coverage `exclude` list to get under the bar.
 - Test behavior the user or caller can observe (rendered text, roles, callbacks, returned values), not implementation details.
 - WebGL does not run in the test environment. Keep logic out of rendering code where possible (see `src/three/traffic.ts`) and mock only the renderer (see `src/three/NetworkSimulation.test.ts`).
-- A pre-commit hook (`.husky/pre-commit`) runs `npm run check` (type-check, lint, formatting check, tests with coverage) and `npm run build`, and rejects the commit if anything fails. Never bypass it with `git commit --no-verify`; fix the failure instead. The same checks run in CI and block deployment when they fail.
+- A pre-commit hook (`.husky/pre-commit`) runs `npm run check` (type-check, lint, formatting check, tests with coverage) and `npm run build`, and rejects the commit if anything fails. Never bypass it with `git commit --no-verify`; fix the failure instead. The same checks run in the deploy workflow (`.github/workflows/deploy.yml`, main branch only) and block deployment when they fail. There is no CI workflow for `develop`.
 
 ## Coding style
 Style is enforced by ESLint (`eslint.config.js`, typescript-eslint strict type-checked rules plus React Hooks rules) and Prettier (`.prettierrc.json`). Do not hand-format code and do not argue with the tools: run `npm run format` and `npm run lint:fix`, then fix what remains.
