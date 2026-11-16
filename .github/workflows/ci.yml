@@ -17,9 +17,11 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 24
           cache: npm
       - run: npm ci
       # Type-check, lint, formatting and tests with the 90% coverage gate.
       - run: npm run check
       - run: npm run build
+      - name: Verify the Pages fallback files are in the build
+        run: test -f dist/404.html && test -f dist/.nojekyll

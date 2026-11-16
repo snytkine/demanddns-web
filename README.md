@@ -50,10 +50,23 @@ Tests live next to the code as `*.test.ts(x)` and use Vitest with React Testing 
 ## Deployment
 
 `.github/workflows/deploy.yml` runs the quality checks, then builds and deploys to
-GitHub Pages on every push to `main` (direct commits and merges). A failing check
-blocks the deployment. Day-to-day work happens on `develop`.
+GitHub Pages on every push to `main` (direct commits and merges). It can also be
+re-run from the Actions tab, but both jobs are guarded to run only on `main`. A failing
+check blocks the deployment. Day-to-day work happens on `develop`.
 
 `.github/workflows/ci.yml` runs the same checks on pushes to `develop` and on pull
 requests. It never deploys.
 
 One-time setup in the GitHub repository: **Settings → Pages → Source: GitHub Actions**.
+
+### Deep links
+
+GitHub Pages cannot rewrite unknown addresses to `index.html`, and the app uses hash
+routing (`/#/features`), which needs no server support. Two things make every link work:
+
+- `/<repo>/#/features` always works: the server only ever sees `/<repo>/`.
+- `public/404.html` is served by GitHub Pages for any address without a file behind it.
+  It rewrites `/<repo>/features` to `/<repo>/#/features`, so links typed or shared without
+  the `#` also work. Unknown pages end up on the app's "Page not found" screen. On a
+  `*.github.io` host the first path segment is treated as the repository name; on a custom
+  domain it is not. `public/.nojekyll` stops Pages from running Jekyll over the build.

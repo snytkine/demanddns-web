@@ -1,10 +1,12 @@
+# Deploys the site to GitHub Pages.
+# Runs ONLY for commits on `main` (direct pushes or merges of other branches into main).
 name: Deploy to GitHub Pages
 
-# Runs only for the main branch: on a direct commit to main or when
-# another branch is merged into main (a merge is a push to main).
 on:
   push:
     branches: [main]
+  # Manual re-runs from the Actions tab; the `if` guards below still restrict them to main.
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -13,27 +15,39 @@ permissions:
 
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   build:
+    # Defence in depth: never build for anything but main.
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          # Match the local dev environment (Node 24 / npm 11) that generates
+          # package-lock.json. Older npm versions can resolve optional deps
+          # differently and make `npm ci` fail with a lockfile-out-of-sync error.
+          node-version: 24
           cache: npm
       - run: npm ci
       # Type-check, lint, formatting and tests with the 90% coverage gate.
       - run: npm run check
+      # public/404.html is copied into dist/ by the build. It is the deep-link fallback:
+      # GitHub Pages has no SPA rewrite, and the app uses hash routing, so 404.html turns
+      # /<repo>/features into /<repo>/#/features. (Copying index.html to 404.html, as a
+      # path-routed site would, would show the home page for every deep link.)
       - run: npm run build
+      - name: Verify the Pages fallback files are in the build
+        run: test -f dist/404.html && test -f dist/.nojekyll
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
 
   deploy:
+    if: github.ref == 'refs/heads/main'
     needs: build
     runs-on: ubuntu-latest
     environment:
