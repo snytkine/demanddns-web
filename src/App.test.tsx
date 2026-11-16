@@ -20,7 +20,7 @@ describe('App', () => {
   it('shows the home page with header, background and footer', async () => {
     const { container } = renderApp();
     expect(screen.getByRole('banner')).toBeInTheDocument();
-    expect(screen.getByRole('contentinfo')).toHaveTextContent('Command DNS');
+    expect(screen.getByRole('contentinfo')).toHaveTextContent('Demand DNS');
     expect(container.querySelector('.background')).not.toBeNull();
     expect(await screen.findByTestId('scene')).toBeInTheDocument();
   });

@@ -16,7 +16,7 @@ function renderHeader(path = '/', onToggleTheme = vi.fn()) {
 describe('Header', () => {
   it('shows the project name linking home', () => {
     renderHeader();
-    expect(screen.getByRole('link', { name: 'Command DNS' })).toHaveAttribute('href', '/');
+    expect(screen.getByRole('link', { name: 'Demand DNS' })).toHaveAttribute('href', '/');
   });
 
   it('lists the five navigation items in order, each with an icon', () => {

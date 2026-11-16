@@ -9,7 +9,7 @@ export interface NavItem {
 }
 
 export const site = {
-  name: 'Command DNS',
+  name: 'Demand DNS',
   copyrightStartYear: 2026,
 } as const;
 

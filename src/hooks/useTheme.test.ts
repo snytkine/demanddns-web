@@ -23,13 +23,13 @@ describe('useTheme', () => {
     });
     expect(result.current.theme).toBe('dark');
     expect(document.documentElement.dataset.theme).toBe('dark');
-    expect(localStorage.getItem('commanddns-theme')).toBe('dark');
+    expect(localStorage.getItem('demanddns-theme')).toBe('dark');
 
     act(() => {
       result.current.toggleTheme();
     });
     expect(result.current.theme).toBe('light');
-    expect(localStorage.getItem('commanddns-theme')).toBe('light');
+    expect(localStorage.getItem('demanddns-theme')).toBe('light');
   });
 
   it('still toggles when storage is unavailable', () => {

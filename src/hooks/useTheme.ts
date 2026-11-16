@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 
 export type Theme = 'light' | 'dark';
 
-const STORAGE_KEY = 'commanddns-theme';
+const STORAGE_KEY = 'demanddns-theme';
 
 function initialTheme(): Theme {
   // index.html sets this before first paint from storage or the system setting.

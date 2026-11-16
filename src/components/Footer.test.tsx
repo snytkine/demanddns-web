@@ -15,10 +15,10 @@ function renderIn(year: number) {
 
 describe('Footer', () => {
   it('shows only the start year in 2026', () => {
-    expect(renderIn(2026)).toHaveTextContent(/^Copyright © 2026 Command DNS$/);
+    expect(renderIn(2026)).toHaveTextContent(/^Copyright © 2026 Demand DNS$/);
   });
 
   it('shows a range from 2026 to the current year afterwards', () => {
-    expect(renderIn(2029)).toHaveTextContent(/^Copyright © 2026 - 2029 Command DNS$/);
+    expect(renderIn(2029)).toHaveTextContent(/^Copyright © 2026 - 2029 Demand DNS$/);
   });
 });

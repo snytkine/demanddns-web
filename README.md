@@ -1,14 +1,14 @@
-# Command DNS website
+# Demand DNS website
 
-Promotional single-page website for Command DNS, built with React, TypeScript, Vite and three.js.
+Promotional single-page website for Demand DNS, built with React, TypeScript, Vite and three.js.
 
 ## Repository
 
-- Web: <https://github.com/snytkine/commanddns-web>
-- Git origin: `git@github.com:snytkine/commanddns-web.git`
+- Web: <https://github.com/snytkine/demanddns-web>
+- Git origin: `git@github.com:snytkine/demanddns-web.git`
 
 ```sh
-git clone git@github.com:snytkine/commanddns-web.git
+git clone git@github.com:snytkine/demanddns-web.git
 ```
 
 ## Develop

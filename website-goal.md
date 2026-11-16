@@ -1,6 +1,6 @@
 create a modern web application that uses react.js, three.js and utilized modern HTML 5 features. Website must render well in browser as well as in mobile devices.
 
-The goal of the website is to promote this new project. The project is called "Command DNS" which is an app for locally hosted DNS server. 
+The goal of the website is to promote this new project. The project is called "Demand DNS" which is an app for locally hosted DNS server. 
 
 Design should use light background color, lots of white space. The main color scheme will be light and dark blue with some elements of silver color. It will use gradients and a "Glass" visual effect of some elements. 
 
@@ -8,7 +8,7 @@ The layout and overall design of this website should resemble a modern MacOS des
 
 The backgound will have some images that showcase technology, with enphasys on Internet, Local Network Setup, simulation of network diagrams that has workstations, servers, router and Internet. The DNS server sits on a local network segment. 
 This background image will be non-obtrusive, and will be used to create a sense of immersion but will not be distracting. Network devices should be represented by commonly used icons that similar to the once that used by cloud providers like AWS, Google Cloud, etc. 
-The website will have a header with the project name "Command DNS" and a navigation menu with items:
+The website will have a header with the project name "Demand DNS" and a navigation menu with items:
 - Home
 - Features
 - Documentation
@@ -18,7 +18,7 @@ The navigation items will also have graphical icons next to them. The icons will
 
 The transition between pages should have a smooth transition animation effect. 
 
-Create a new React.js project using Vite. Must use typescript with strong types. Website must be easy to maintain and to update the content. The content of individual pages should be stored as markdown files. The website must have a footer with copyright information and a current year which will be set dynamically in the format "Copyright © 2026 - [current year] Command DNS" If current year is 2026 then only should be displayed as "Copyright © 2026 Command DNS".
+Create a new React.js project using Vite. Must use typescript with strong types. Website must be easy to maintain and to update the content. The content of individual pages should be stored as markdown files. The website must have a footer with copyright information and a current year which will be set dynamically in the format "Copyright © 2026 - [current year] Demand DNS" If current year is 2026 then only should be displayed as "Copyright © 2026 Demand DNS".
 
 The home page should include 3 blocks - Features, How it works, and Download. Each block should be a card with an icon, title.
 

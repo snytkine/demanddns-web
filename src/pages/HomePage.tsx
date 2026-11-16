@@ -22,7 +22,7 @@ interface HomeCard {
 const cards: readonly HomeCard[] = [
   { icon: 'features', content: featuresCard, to: '/features', linkLabel: 'Explore features' },
   { icon: 'how-it-works', content: howItWorksCard, to: '/documentation', linkLabel: 'Read the documentation' },
-  { icon: 'download', content: downloadCard, to: '/download', linkLabel: 'Get Command DNS' },
+  { icon: 'download', content: downloadCard, to: '/download', linkLabel: 'Get Demand DNS' },
 ];
 
 interface HomePageProps {

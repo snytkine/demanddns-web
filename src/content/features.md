@@ -1,6 +1,6 @@
 # Features
 
-Command DNS brings the DNS server for your local network and its administration together in one application.
+Demand DNS brings the DNS server for your local network and its administration together in one application.
 
 ## Graphical administration
 
@@ -16,7 +16,7 @@ Answers are cached on your network segment, so repeated lookups are served local
 
 ## Upstream forwarding
 
-Names that Command DNS does not know are forwarded to the upstream resolvers you choose. Only those queries leave your network.
+Names that Demand DNS does not know are forwarded to the upstream resolvers you choose. Only those queries leave your network.
 
 ## Query visibility
 
@@ -24,4 +24,4 @@ See which devices are asking for which names, so you can understand and troubles
 
 ## Locally hosted
 
-Command DNS runs on hardware you own, on your own network. Your DNS configuration and query history stay with you.
+Demand DNS runs on hardware you own, on your own network. Your DNS configuration and query history stay with you.

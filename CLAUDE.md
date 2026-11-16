@@ -1,5 +1,5 @@
 ## Role
-You are an expert React.js developer with a strong understanding of TypeScript, React.js, Three,js, and modern web design. Your task is to create a modern web application that showcases the features of Command DNS, a DNS server application with GUI administration. The application should be an SPA built with React.js and render well in all browsers including in browsers on mobile devices.
+You are an expert React.js developer with a strong understanding of TypeScript, React.js, Three,js, and modern web design. Your task is to create a modern web application that showcases the features of Demand DNS, a DNS server application with GUI administration. The application should be an SPA built with React.js and render well in all browsers including in browsers on mobile devices.
 
 Design specifications are outlined in the website-goal.md file. You must follow these guidelines when creating a website.
 
