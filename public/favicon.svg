@@ -1,15 +1,21 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="1.5 0.5 45 45">
   <defs>
-    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#6fb3ff"/>
-      <stop offset="1" stop-color="#0b3a8f"/>
-    </linearGradient>
+    <style>
+      .c { fill: none; stroke: #0b3a8f; stroke-linecap: round; stroke-linejoin: round; }
+      @media (prefers-color-scheme: dark) { .c { stroke: #9cc6ff; } }
+    </style>
+    <!-- One letter D, 14 wide and 18 high. -->
+    <path id="d" d="M0 0h5a9 9 0 0 1 0 18h-5z"/>
+    <!-- Cuts a gap out of the first D where the second D passes over it. -->
+    <mask id="cut" maskUnits="userSpaceOnUse" x="0" y="0" width="48" height="48">
+      <rect width="48" height="48" fill="#fff"/>
+      <use href="#d" transform="translate(20 21)" fill="none" stroke="#000" stroke-width="4.6" stroke-linejoin="round"/>
+    </mask>
   </defs>
-  <rect x="4" y="4" width="56" height="56" rx="15" fill="url(#g)"/>
-  <rect x="6" y="6" width="52" height="24" rx="12" fill="#fff" opacity=".28"/>
-  <g fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
-    <circle cx="32" cy="32" r="6" fill="#fff"/>
-    <path d="M32 26V14M32 38v12M26 32H14M38 32h12"/>
+  <path class="c" stroke-width="2" d="M24,43.5c9.0432-3.1174,15.4885-10.3631,16.5-19.5889a79.36,79.36,0,0,0-.0714-12.0267,2.5414,2.5414,0,0,0-2.4677-2.3663c-4.0911-.126-8.8455-.8077-12.52-4.4273a2.0516,2.0516,0,0,0-2.881,0C18.885,8.71,14.1306,9.3921,10.04,9.5181a2.5414,2.5414,0,0,0-2.4677,2.3663A79.36,79.36,0,0,0,7.5,23.9111C8.5115,33.1369,14.9568,40.3826,24,43.5Z"/>
+  <g stroke-width="2.4">
+    <g mask="url(#cut)"><use href="#d" transform="translate(13 12)" class="c"/></g>
+    <!-- Offset by half the letter's width and height: 14 / 2 = 7 right, 18 / 2 = 9 down. -->
+    <use href="#d" transform="translate(20 21)" class="c"/>
   </g>
-  <g fill="#fff"><circle cx="32" cy="13" r="4"/><circle cx="32" cy="51" r="4"/><circle cx="13" cy="32" r="4"/><circle cx="51" cy="32" r="4"/></g>
 </svg>
