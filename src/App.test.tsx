@@ -30,6 +30,7 @@ describe('App', () => {
     ['/documentation', 'Documentation'],
     ['/tutorials', 'Tutorials'],
     ['/download', 'Download'],
+    ['/release-notes', 'Release notes'],
   ])('shows the %s page', (path, title) => {
     renderApp(path);
     expect(within(screen.getByRole('main')).getByRole('heading', { level: 1, name: title })).toBeInTheDocument();
